@@ -1,8 +1,10 @@
 package online.forgottenbit.nutrilicious
 
+import android.Manifest
 import android.app.SearchManager
 import android.content.Context
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.os.Bundle
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import androidx.appcompat.app.AppCompatActivity
@@ -13,6 +15,9 @@ import androidx.appcompat.widget.SearchView
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
+import androidx.annotation.NonNull
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import io.supportgenie.androidlibrary.LibraryActivity
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
@@ -28,6 +33,9 @@ import online.forgottenbit.nutrilicious.view.model.FavoritesViewModel
 private const val SEARCH_FRAGMENT_TAG = "SEARCH_FRAGMENT"
 
 class MainActivity : AppCompatActivity() {
+
+
+    internal var permission_req_code = 1000
 
 
     val UI = Dispatchers.Main + SupervisorJob()
@@ -141,7 +149,11 @@ class MainActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
 
         if(item?.itemId == R.id.support){
-            startActivity(Intent(this,LibraryActivity::class.java))
+            if(!defaultPermissionCheck()){
+                askForPermission()
+            }else{
+                startActivity(Intent(this,LibraryActivity::class.java))
+            }
         }
 
         return super.onOptionsItemSelected(item)
@@ -152,5 +164,58 @@ class MainActivity : AppCompatActivity() {
             val query = intent.getStringExtra(SearchManager.QUERY)
             searchFragment.updateListFor(query)
         }
+    }
+
+    private fun askForPermission() {
+
+        //asking  for storage permission from user at runtime
+
+        ActivityCompat.requestPermissions(
+            this,
+            arrayOf(
+                Manifest.permission.READ_EXTERNAL_STORAGE,
+                Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                Manifest.permission.WAKE_LOCK,
+                Manifest.permission.ACCESS_WIFI_STATE,
+                Manifest.permission.INTERNET,
+                Manifest.permission.ACCESS_NETWORK_STATE
+            ),
+            permission_req_code
+        )
+
+
+    }
+
+
+    override fun onRequestPermissionsResult(requestCode: Int, @NonNull permissions: Array<String>, @NonNull grantResults: IntArray) {
+
+        //checking if user granted the permissions or not
+
+        if (requestCode == permission_req_code) {
+            if (grantResults.size > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                Toast.makeText(this, "Permission granted :)", Toast.LENGTH_LONG).show()
+            } else {
+                Toast.makeText(
+                    this,
+                    "App will not work without permissions, Grant these permissions from settings. :|",
+                    Toast.LENGTH_LONG
+                ).show()
+                askForPermission()
+            }
+        }
+    }
+
+    private fun defaultPermissionCheck(): Boolean {
+        //checking if permissions is already granted
+        val internet = ContextCompat.checkSelfPermission(applicationContext, Manifest.permission.INTERNET)
+        val access = ContextCompat.checkSelfPermission(applicationContext, Manifest.permission.ACCESS_WIFI_STATE)
+        val change = ContextCompat.checkSelfPermission(applicationContext, Manifest.permission.ACCESS_NETWORK_STATE)
+        val bt = ContextCompat.checkSelfPermission(applicationContext, Manifest.permission.WAKE_LOCK)
+        val btAdmin = ContextCompat.checkSelfPermission(applicationContext, Manifest.permission.READ_EXTERNAL_STORAGE)
+
+        val external_storage_write = ContextCompat.checkSelfPermission(applicationContext, Manifest.permission.WRITE_EXTERNAL_STORAGE)
+        return internet == PackageManager.PERMISSION_GRANTED  &&
+                access == PackageManager.PERMISSION_GRANTED && change == PackageManager.PERMISSION_GRANTED && bt == PackageManager.PERMISSION_GRANTED &&
+                btAdmin == PackageManager.PERMISSION_GRANTED && external_storage_write == PackageManager.PERMISSION_GRANTED
     }
 }
