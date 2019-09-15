@@ -1,8 +1,8 @@
 package online.forgottenbit.nutrilicious.data.db
 
-import android.arch.persistence.room.Database
-import android.arch.persistence.room.Room
-import android.arch.persistence.room.RoomDatabase
+import androidx.room.Database
+import androidx.room.Room
+import androidx.room.RoomDatabase
 import android.content.Context
 import kotlinx.coroutines.CoroutineScope
 import online.forgottenbit.nutrilicious.BuildConfig
@@ -12,7 +12,7 @@ import online.forgottenbit.nutrilicious.model.FoodDetails
 
 val dbScope = CoroutineScope(DB)
 
-@Database(entities = [Food::class, FoodDetails::class], version = 2)
+@Database(entities = [Food::class, FoodDetails::class], version = 2,exportSchema = false)
 abstract class AppDatabase : RoomDatabase() {
 
     companion object {

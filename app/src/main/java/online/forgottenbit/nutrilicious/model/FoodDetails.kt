@@ -1,8 +1,8 @@
 package online.forgottenbit.nutrilicious.model
 
-import android.arch.persistence.room.Entity
-import android.arch.persistence.room.PrimaryKey
-import android.arch.persistence.room.TypeConverters
+import androidx.room.Entity
+import androidx.room.PrimaryKey
+import androidx.room.TypeConverters
 import online.forgottenbit.nutrilicious.data.db.NutrientListConverter
 import online.forgottenbit.nutrilicious.data.db.NutrientTypeConverter
 import online.forgottenbit.nutrilicious.data.network.dto.DetailsDto

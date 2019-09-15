@@ -4,23 +4,19 @@ import android.app.SearchManager
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.support.design.widget.BottomNavigationView
-import android.support.v7.app.AppCompatActivity
-import android.support.v7.widget.DividerItemDecoration
-import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.RecyclerView
-import android.widget.SearchView
+import com.google.android.material.bottomnavigation.BottomNavigationView
+import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.DividerItemDecoration
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import androidx.appcompat.widget.SearchView
 import android.view.Menu
+import android.view.MenuItem
 import android.widget.Toast
-import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.fragment_search.*
+import io.supportgenie.androidlibrary.LibraryActivity
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import online.forgottenbit.nutrilicious.view.common.getViewModel
-import online.forgottenbit.nutrilicious.data.network.networkScope
-import online.forgottenbit.nutrilicious.data.network.usdaApi
 import online.forgottenbit.nutrilicious.model.Food
 import online.forgottenbit.nutrilicious.view.common.addFragmentToState
 import online.forgottenbit.nutrilicious.view.common.replaceFragment
@@ -28,7 +24,6 @@ import online.forgottenbit.nutrilicious.view.main.FavoritesFragment
 import online.forgottenbit.nutrilicious.view.main.SearchFragment
 import online.forgottenbit.nutrilicious.view.main.SearchListAdapter
 import online.forgottenbit.nutrilicious.view.model.FavoritesViewModel
-import online.forgottenbit.nutrilicious.view.model.SearchViewModel
 
 private const val SEARCH_FRAGMENT_TAG = "SEARCH_FRAGMENT"
 
@@ -58,20 +53,20 @@ class MainActivity : AppCompatActivity() {
     }
 
 
-    fun setUpRecyclerView(rv: RecyclerView, list: List<Food> = emptyList()) {
+    fun setUpRecyclerView(rv: androidx.recyclerview.widget.RecyclerView, list: List<Food> = emptyList()) {
         with(rv) {
             adapter = setUpSearchListAdapter(rv, list)
-            layoutManager = LinearLayoutManager(context)
+            layoutManager = androidx.recyclerview.widget.LinearLayoutManager(context)
             addItemDecoration(
-                    DividerItemDecoration(
-                            context, LinearLayoutManager.VERTICAL
-                    )
+                androidx.recyclerview.widget.DividerItemDecoration(
+                    context, androidx.recyclerview.widget.LinearLayoutManager.VERTICAL
+                )
             )
             setHasFixedSize(true)
         }
     }
 
-    private fun setUpSearchListAdapter(rv: RecyclerView, items: List<Food>) = SearchListAdapter(
+    private fun setUpSearchListAdapter(rv: androidx.recyclerview.widget.RecyclerView, items: List<Food>) = SearchListAdapter(
             items,
             onItemClick = { startDetailsActivity(it) },
             onStarClick = { food, layoutPosition ->
@@ -141,6 +136,15 @@ class MainActivity : AppCompatActivity() {
         }
 
         return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+
+        if(item?.itemId == R.id.support){
+            startActivity(Intent(this,LibraryActivity::class.java))
+        }
+
+        return super.onOptionsItemSelected(item)
     }
 
     override fun onNewIntent(intent: Intent) {

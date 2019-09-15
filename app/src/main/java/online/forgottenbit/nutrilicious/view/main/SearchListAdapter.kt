@@ -1,6 +1,6 @@
 package online.forgottenbit.nutrilicious.view.main
 
-import android.support.v7.widget.RecyclerView
+import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,7 +12,7 @@ import online.forgottenbit.nutrilicious.model.Food
 class SearchListAdapter(private var items: List<Food>,
                         private val onItemClick: (Food) -> Unit,
                         private val onStarClick: (Food, Int) -> Unit) :
-        RecyclerView.Adapter<SearchListAdapter.ViewHolder> (){
+        androidx.recyclerview.widget.RecyclerView.Adapter<SearchListAdapter.ViewHolder> (){
 
 
     override fun onCreateViewHolder(p0: ViewGroup, p1: Int): ViewHolder {
@@ -40,7 +40,7 @@ class SearchListAdapter(private var items: List<Food>,
 
     inner class ViewHolder(
         override val containerView: View
-    ) : RecyclerView.ViewHolder(containerView), LayoutContainer {
+    ) : androidx.recyclerview.widget.RecyclerView.ViewHolder(containerView), LayoutContainer {
 
         fun bindTo(food: Food) {  // Populates text views and star image to show a food
             tvFoodName.text = food.name

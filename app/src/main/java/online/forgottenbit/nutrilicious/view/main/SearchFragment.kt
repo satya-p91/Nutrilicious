@@ -2,9 +2,9 @@ package online.forgottenbit.nutrilicious.view.main
 
 import android.content.Context
 import android.os.Bundle
-import android.support.v4.app.Fragment
-import android.support.v7.widget.DividerItemDecoration
-import android.support.v7.widget.LinearLayoutManager
+import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.DividerItemDecoration
+import androidx.recyclerview.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -22,7 +22,7 @@ import online.forgottenbit.nutrilicious.view.common.getViewModel
 import online.forgottenbit.nutrilicious.view.model.FavoritesViewModel
 import online.forgottenbit.nutrilicious.view.model.SearchViewModel
 
-class SearchFragment : Fragment() {
+class SearchFragment : androidx.fragment.app.Fragment() {
 
     private lateinit var searchViewModel: SearchViewModel
 

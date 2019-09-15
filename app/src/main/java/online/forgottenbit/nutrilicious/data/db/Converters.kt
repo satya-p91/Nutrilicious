@@ -1,6 +1,6 @@
 package online.forgottenbit.nutrilicious.data.db
 
-import android.arch.persistence.room.TypeConverter
+import androidx.room.TypeConverter
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.Types
 import online.forgottenbit.nutrilicious.model.Nutrient

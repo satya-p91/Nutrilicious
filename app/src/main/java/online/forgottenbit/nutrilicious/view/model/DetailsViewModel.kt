@@ -1,7 +1,7 @@
 package online.forgottenbit.nutrilicious.view.model
 
 import android.app.Application
-import android.arch.lifecycle.AndroidViewModel
+import androidx.lifecycle.AndroidViewModel
 import online.forgottenbit.nutrilicious.data.DetailsRepository
 import online.forgottenbit.nutrilicious.model.FoodDetails
 

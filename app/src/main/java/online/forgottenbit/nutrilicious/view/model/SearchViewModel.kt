@@ -1,6 +1,6 @@
 package online.forgottenbit.nutrilicious.view.model
 
-import android.arch.lifecycle.ViewModel
+import androidx.lifecycle.ViewModel
 import kotlinx.coroutines.withContext
 import online.forgottenbit.nutrilicious.data.network.NETWORK
 import online.forgottenbit.nutrilicious.data.network.dto.FoodDto
